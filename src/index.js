@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", event => {
     setupLikeListener();
     setupCommentListener();
 
+    setupDownvoteListener();
     setupCommentDeleteListener();
 
     getImage();
@@ -42,6 +43,16 @@ function setupCommentListener(){
         event.preventDefault();
         if(event.target.className.indexOf("comment-form") !== -1){
             submitComment(event.target);
+        }
+    })
+}
+
+//
+//
+function setupDownvoteListener(){
+    document.addEventListener("click", event => {
+        if(event.target.className.indexOf("downvote-button") !== -1){
+            addDownvote(event.target);
         }
     })
 }
@@ -95,8 +106,15 @@ function renderLikes(likeCount){
     const plural = likeCount === 1 ? "" : "s";
     likes.innerText = `${likeCount} like${plural}`;
 
+    likes.dataset.likes = likeCount;
+
+    /*
     const likeButton = imageCard.querySelector(".like-button");
     likeButton.dataset.likes = likeCount;
+
+    const downvoteButton = imageCard.querySelector(".downvote-button");
+    downvoteButton.dataset.likes = likeCount;
+    */
 }
 
 //
@@ -127,8 +145,24 @@ function renderIndividualComment(comment){
 //
 //
 function addLike(button){
-    const newLikes = parseInt(button.dataset.likes) + 1;
+    updateLikes(1, button);
+    // const newLikes = parseInt(button.dataset.likes) + 1;
+    // setLikes(newLikes);
+}
 
+function addDownvote(button){
+    updateLikes(-1, button);
+    // const newLikes = parseInt(button.dataset.likes) - 1;
+    // setLikes(newLikes);
+}
+
+function updateLikes(amount, button){
+    const likeElement = button.parentNode.querySelector(".likes");
+    const newLikes = parseInt(likeElement.dataset.likes) + amount;
+    setLikes(newLikes);
+}
+
+function setLikes(newLikes){
     const likeBody = {
         likes: newLikes
     };

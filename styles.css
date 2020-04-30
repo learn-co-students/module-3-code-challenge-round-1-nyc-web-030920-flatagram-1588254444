@@ -134,3 +134,16 @@ body {
   background-color: #FCC;
   border-radius: 4px;
 }
+
+.downvote-button{
+  font-size: 1rem;
+  border: none;
+  background: none;
+  transition: color 300ms;
+  cursor: pointer;
+}
+
+.downvote-button:hover {
+  background-color: #FCC;
+  border-radius: 5px;
+}
