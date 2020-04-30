@@ -1,11 +1,11 @@
 /* 1. ok Get image from db. (fetch) OK
     2. OK render image onto webpage w/ it's likes and comments
-    3. isolate heart icon.
-    4. add eventlistener (click) on heart icon to increase image likes
-    5. add like to database (fetch) patch
-    6. isolate comment section (form)
-    7. isolate post button (submit) prevent default
-    8. no persistence needed for comments but do it anyways
+    3. OK isolate heart icon.
+    4. OK add eventlistener (click) on heart icon to increase image likes
+    5. NO add like to database (fetch) patch
+    6. OK isolate comment section (form)
+    7. OK isolate post button (submit) prevent default
+    8. Could not get post to work. no persistence needed for comments but do it anyways
 */
 
 
