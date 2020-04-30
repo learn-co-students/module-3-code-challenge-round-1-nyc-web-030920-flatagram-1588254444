@@ -36,10 +36,10 @@ function commentSection(pic){
 }
 
 let btn=document.getElementsByClassName("like-button")[0]
-let likes=parseInt(likeNum.innerText,10)
 
 function liked(){
     btn.addEventListener("click",function(event){
+let likes=parseInt(likeNum.innerText,10)
 
 likes++
 likeNum.innerText=`${likes} likes`
@@ -52,7 +52,7 @@ likeNum.innerText=`${likes} likes`
         body:JSON.stringify({likes})
      })
      .then((resp)=>resp.json())
-     .then((json)=>console.log(json))
+     .then()
    }) 
 
 
@@ -60,24 +60,7 @@ likeNum.innerText=`${likes} likes`
 
 
 }
-// function addComents(){
-// let
 
-//     fetch("http://localhost:3000/image",{
-//         method:"PATCH",
-//         headers:{
-//             "Content-Type":"application/json",
-//             "accept":"application/json"
-//         },
-//         body:JSON.stringify({comments})
-//      })
-//      .then((resp)=>resp.json())
-//      .then((json)=>console.log(json))
-//    }) 
-
-
-
-// }
 function addComents(){
     let form=document.getElementById("comment-form")
     document.addEventListener("submit",function(event){
