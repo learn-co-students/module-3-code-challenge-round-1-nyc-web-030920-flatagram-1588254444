@@ -1,5 +1,3 @@
-// write your code here
-// The endpoints you will need are:
 //GET /image
 //PATCH /image
 
@@ -19,20 +17,27 @@
 //PATCH request to add a comment to a picture
 //adjust the form 
 
-const url = 'http://localhost:3000/image'
+
+document.addEventListener('DOMContentLoaded', () => {
+
+const url = http://localhost:3000/image
 const imageCtr = document.querySelector('.image-container')
 
-const getImages = () => {
-    fetch(url)
-    .then(response => response.json())
-    .then(console.log)
-}
 
-document.querySelector(".like-button")
-document.addEventListener('click', event => {
-    event.preventDefault()
+        fetch(url)
+        .then(response => response.json())
+        .then(console.log) 
+    }
 
-})
+// const img = document.querySelector(".image")
+// img.src =
+
+
+// document.querySelector(".like-button")
+// document.addEventListener('click', event => {
+//     event.preventDefault()
+
+// })
 
 
 
@@ -45,4 +50,3 @@ document.addEventListener('click', event => {
 
 
 }
-
