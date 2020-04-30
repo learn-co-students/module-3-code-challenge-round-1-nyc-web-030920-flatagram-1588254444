@@ -61,17 +61,33 @@ document.addEventListener('DOMContentLoaded', () => {
         //get the image from the server
         //display it
         fetch('http://localhost:3000/image')
-        .then(resp => resp.json)
+        .then(resp => resp.json())
         .then(data => {
             //get the image on DOM
             let imageCard = document.querySelector('.image-card');
             let kids = imageCard.childNodes; //gets all the children
             console.log(kids)
-            console.log(data.title)
+            // console.log(data.title)
             //h2
             kids[1].textContent = data.title;
+            //img
+            kids[3].src = data.image;
         })
     }
+
+    //event listener for comments posted
+    document.addEventListener('submit', event => {
+        event.preventDefault();
+        //get comment block
+        let commentsList = document.querySelector('.comments');
+        //get text from comment form
+        let commentForm = event.target;
+        let newComment = commentForm.comment.value;
+        let li = document.createElement('li');
+        li.textContent = newComment;
+        commentsList.appendChild(li);
+        commentForm.reset();
+    })
 
     showComments();
     getImage();
