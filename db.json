@@ -1,7 +1,7 @@
 {
   "image": {
     "title": "Coder dog",
-    "likes": 18,
+    "likes": 20,
     "image": "./assets/coder-dog.png",
     "comments": [
       {
@@ -27,6 +27,12 @@
       },
       {
         "content": "doggo codo!"
+      },
+      {
+        "content": "more more more"
+      },
+      {
+        "content": "#codog"
       }
     ]
   }

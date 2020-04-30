@@ -20,7 +20,6 @@ let commentList = null;
 let imageData = null;
 
 document.addEventListener("DOMContentLoaded", event => {
-    console.log("DOM loaded");
 
     imageCard = document.querySelector(".image-card");
     commentList = imageCard.querySelector(".comments");
