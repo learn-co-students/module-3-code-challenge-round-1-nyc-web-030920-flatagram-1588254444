@@ -1,8 +1,8 @@
-//fetch image, likes, and comments 
-    //comments are an array
-//event listener on heart icon
+//√let likesCount = parseInt(document.querySelector('.likes').textContent)
+    //√comments are an array
+//√event listener on heart icon
 //likes increase when heart is clicked
-//user can add a comment and it displays on the DOM
+//√user can add a comment and it displays on the DOM
 
 document.addEventListener('DOMContentLoaded', () => {
     fetchImage()
@@ -38,11 +38,11 @@ const showComments = (comment) => {
 const increaseLikes = () => {
     const likeBtn = document.querySelector('.like-button')
     likeBtn.addEventListener('click', function(event) {
+        let button = event.target
         let likesCount = parseInt(document.querySelector('.likes').textContent)
         console.log(likesCount)
-        let newLikes = likesCount++
-        console.log(likesCount)
-        likesCount.innerText = newLikes + ' Likes'
+        let newLikes = likesCount + 1
+        button.previousElementSibling.textContent = newLikes + ' Likes'
         
         saveLikes(likesCount)
     })
@@ -60,49 +60,21 @@ const addComments = () => {
     })
 };
 
+
 const saveLikes = (likesCount) => {
     fetch('http://localhost:3000/image', {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringity({
+        body: JSON.stringify({
             likes: likesCount
         })
     })
-}
+};
 
 
 
 
 
-// const displayImage = (data) => {
-//     const imageContainer = document.querySelector('.image-container')
-//     const commentUl = document.createElement('ul')
-//     console.log(commentUl)
-//     commentUl.className = 'comments'
-//     const imageDiv = document.createElement('div')
-//     imageDiv.className = 'image-card'
-//     imageDiv.innerHTML = `
-//     <h2 class="title">${data.title}</h2>
-//     <img src=${data.image} class="image" />
-//     <div class="likes-section">
-//       <span class="likes">${data.likes} likes</span>
-//       <button class="like-button">♥</button>
-//     </div>
-//     `
-//     imageContainer.append(imageDiv)
-//     data.comments.forEach(comment => displayComments(comment, commentUl))
-//     imageContainer.append(commentUl)
-// };
-
-// const displayComments = (comment, commentUl) => {
-//     console.log(commentUl)
-//     commentUl.innerHTML = `
-//         <li>${comment.content}</li>
-//     `
-//     // const li = document.createElement('li')
-//     // li.innerText = comment.content
-//     // commentUl.append(li)
-// };
 
