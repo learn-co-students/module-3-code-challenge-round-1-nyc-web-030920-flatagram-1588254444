@@ -4,13 +4,14 @@ getImageInformation()
 const likeButton= document.getElementsByClassName("like-button")[0]
 const likes= document.getElementsByClassName("likes")[0]
 const commentForm= document.getElementsByClassName("comment-form")[0]
-
+const imageDiv= document.getElementsByClassName("image-container")[0]
 likeButton.addEventListener("click", function(e){
     addLike(likes)
 })
 
 commentForm.addEventListener("submit", function(e){addComment(e)})
 
+imageDiv.addEventListener("click", function(e){deleteComment(e)})
 })
 
 function addLike(addTo){
@@ -45,6 +46,7 @@ function getImageInformation(){
             li.className= "comment"
             let button= document.createElement("button")
             button.innerText="delete"
+            button.className="delete"
             li.appendChild(button)
             comments.appendChild(li)
         }
@@ -63,6 +65,7 @@ function addComment(e){
     let li= document.createElement("li")
     let button= document.createElement("button")
     button.innerText="delete"
+    button.className="delete"
     li.innerText=e.target[0].value
     li.appendChild(button)
     li.className= "comment"
@@ -74,6 +77,10 @@ function deleteComment(e){
 //arr1 =splice(0..id-1)
 //arr2= splice(id-1..arr.length-1)
 //comments : arr1.concat(arr2)
+    if(e.target.className ==="delete"){
+       console.dir(e.target)
+    }
+
 }
 
 /*  funky syntax error that I can't find
