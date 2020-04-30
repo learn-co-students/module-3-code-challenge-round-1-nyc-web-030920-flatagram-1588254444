@@ -16,8 +16,13 @@ document.addEventListener(`DOMContentLoaded`, () => {
 "Accept": "application/json"}
     const imageLocation = document.getElementsByClassName("image")[0]
     const commentLocation = document.getElementsByClassName("comments")[0]
+    const titleLocation = document.querySelector(".title")
     const likes = document.getElementsByClassName("likes")[0]
     const likeBtn = document.querySelector(".like-button")
+    const commentInput = document.querySelector(".comment-input")
+    const commentForm = document.querySelector(".comment-form")
+    const commentBtn = commentForm.querySelector(".comment-button")
+    
     const getImage = () => {
         fetch(baseUrl)
         .then(response => response.json())
@@ -28,6 +33,7 @@ document.addEventListener(`DOMContentLoaded`, () => {
         imageLocation.src = image.image
         renderComments(image)
         renderLikes(image)
+        renderTitle(image)
     }
 
     function renderComments(source){
@@ -41,15 +47,41 @@ document.addEventListener(`DOMContentLoaded`, () => {
         likes.textContent = `${source.likes} likes`
     }
 
+    function renderTitle(source){
+        titleLocation.textContent = source.title
+    }
+
     likeBtn.addEventListener("click", event => {
-        let newCount = parseInt(likes.textContent) + 1 
+        const newCount = parseInt(likes.textContent) + 1 
         likes.textContent = `${newCount} likes`
-        fetch(baseUrl), {
-            method: "PATCH",
-            headers: reqHeaders,
-            body: JSON.stringify({"likes":`${parseInt(newCount)}`})
-        }
+        patchLikes(newCount)
     })
 
+    function patchLikes(newCount){        
+        fetch("http://localhost:3000/image"), {
+            method: "PATCH",
+            headers: reqHeaders,
+            body: JSON.stringify({
+            "likes": `${newCount}`
+            })
+        }
+    }       
+    
+    commentForm.addEventListener("submit", event => {
+        event.preventDefault()
+        let comment = commentInput.value 
+        newComment = document.createElement(`li`)
+        newComment.textContent = comment
+        commentLocation.append(newComment)
+        commentForm.reset()
+        // fetch(baseUrl), {
+        //     method: "POST",
+        //     headers: reqHeaders,
+        //     body: JSON.stringify({
+        //         "comments": `${comment}`
+        //     })
+        // }
+    })
+    
     getImage()
 })
