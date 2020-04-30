@@ -115,7 +115,7 @@ function renderIndividualComment(comment){
     const li = document.createElement("li");
     li.dataset.content = comment.content;
     li.innerHTML = `
-        ${comment.content} <button class="delete" style="margin:2px; padding:2px;">X</button>
+        ${comment.content} <button class="delete">X</button>
     `;
     commentList.append(li);
 }
