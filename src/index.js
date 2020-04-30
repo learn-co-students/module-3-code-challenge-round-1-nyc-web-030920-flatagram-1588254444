@@ -46,8 +46,8 @@ document.addEventListener('DOMContentLoaded', function () {
         let ul = document.querySelector('.comments');
         const comments = result['comments'];
         comments.forEach(function (comment) {
+            //if the comment['conent'] is empty, not show this comment
             if (comment['content']) {
-                console.log('has content');
                 let li = document.createElement('li')
                 li.textContent = comment['content'];
                 li.dataset.commentId = comment.id;
@@ -99,6 +99,12 @@ document.addEventListener('DOMContentLoaded', function () {
             })
                 .then(res => res.json())
                 .then(fetchDogInfo);
+        } else if (eventTarget.className === 'delete-comment') {
+            //1. find li.dataset.commentId
+            //2. find object with this id in dogObj, then remove this element
+            //3. make a PATCH to database with updated dogObj
+            //4. make a GET request from database
+            console.log(eventTarget);
         }
     })
 
