@@ -1,8 +1,10 @@
 ////create DOMload Listener
 ////get the image, likes, and comments from server
-//load the image, likes and comments to the page
-//add click listener to heart button
-//add likes to db
+////load the image, likes and comments to the page
+////remove the placeholder comments
+////add click listener to heart button
+    //increment the likes on the DOM
+    //patch the likes in the DB
 //add a comment to the page (not the db)
 
 window.addEventListener("DOMContentLoaded", (event) =>{
@@ -17,17 +19,19 @@ window.addEventListener("DOMContentLoaded", (event) =>{
     }
     
     const commentsList = document.querySelector(".comments")
-
+    const likesDiv = document.querySelector(".likes-section")
+    const likesSpan = document.querySelector(".likes")
+    
     function renderImage(image){
         console.log(image)
         const img = document.querySelector(".image")
         const title = document.querySelector('.title')
-        const likes = document.querySelector(".likes")
         commentsList.innerHTML = ""
         renderComments(image.comments)
         img.src = image.image
         title.textContent = image.title
-        likes.textContent = `${image.likes} Likes`
+        likesSpan.dataset.likes = image.likes
+        likesSpan.textContent = `${image.likes} Likes`
     }
 
     function renderComments(commentsArray){
@@ -38,6 +42,13 @@ window.addEventListener("DOMContentLoaded", (event) =>{
         });
     }
 
+    likesDiv.addEventListener("click", (e) =>{
+        if (e.target.className === "like-button"){
+            console.log(likesSpan)
+            console.log(likesSpan.textContent)
+            console.log("I'm the like button!!")
+        }
+    })
 
 
 
