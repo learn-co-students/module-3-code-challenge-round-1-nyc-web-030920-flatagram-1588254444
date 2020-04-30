@@ -49,7 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let commentInput = form.children[0]
     if (commentInput.value) {
       let newCommentLi = document.createElement('li')
-      let lastLi = commentsUl.lastChild.previousSibling
+      let lastLi = commentsUl.lastChild
+  
       let idValue = lastLi.dataset.id
       
       newCommentLi.innerText = commentInput.value
@@ -79,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })
 
+
 })
 
 function getData() {
@@ -93,15 +95,19 @@ function renderData(obj) {
   likesSpan.innerText = `${obj.likes} likes`
 
   for(let i = 0; i < obj['comments'].length; i++) {
-    commentsUl.children[i].innerText = obj['comments'][i].content
-    commentsUl.children[i].dataset.id = obj['comments'][i].id
+    if (commentsUl.children.length < obj['comments'][i].id) {
+      let li = document.createElement('li')
+      li.dataset.id = obj['comments'][i].id
+      li.innerText = obj['comments'][i].content
+      commentsUl.append(li)
+    } else {
+      commentsUl.children[i].innerText = obj['comments'][i].content
+      commentsUl.children[i].dataset.id = obj['comments'][i].id
+    }
   }
 }
 
 
-// As a user, I can:
-
-// Still see the comments written after reloading the page
 // Downvote an image
 // Delete a comment
 
