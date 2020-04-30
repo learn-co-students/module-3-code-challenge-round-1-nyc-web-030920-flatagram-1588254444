@@ -1,10 +1,10 @@
 // write your code here
 window.addEventListener("DOMContentLoaded", (e)=>{
 getImageInformation()
-
 const likeButton= document.getElementsByClassName("like-button")[0]
 const likes= document.getElementsByClassName("likes")[0]
 const commentForm= document.getElementsByClassName("comment-form")[0]
+
 likeButton.addEventListener("click", function(e){
     addLike(likes)
 })
@@ -38,25 +38,42 @@ function getImageInformation(){
         title.dataset.id= json.id
         image.src = json.image
         likes.innerText = `${json.likes} likes`
-        comments.innerText= createCommentString(json.comments)
-
+        comments.innerHTML=""
+        for(const comment of json.comments){
+            let li= document.createElement("li")
+            li.innerText=comment.content
+            li.className= "comment"
+            let button= document.createElement("button")
+            button.innerText="delete"
+            li.appendChild(button)
+            comments.appendChild(li)
+        }
 
     })
 }
 
-function createCommentString(array){
-    let string=""
-    for(const comment of array){
-        
-        string+= `${comment.content}\n`
-    }
-    return string
-}
+
+   
+
+  
 
 function addComment(e){
     e.preventDefault()
     const comments= document.getElementsByClassName("comments")[0]
-    comments.innerText= comments.innerText+"\n" + e.target[0].value
+    let li= document.createElement("li")
+    let button= document.createElement("button")
+    button.innerText="delete"
+    li.innerText=e.target[0].value
+    li.appendChild(button)
+    li.className= "comment"
+    comments.appendChild(li)
+}
+
+function deleteComment(e){
+//get comment array and splice from 0-id-1 then id-1 to end
+//arr1 =splice(0..id-1)
+//arr2= splice(id-1..arr.length-1)
+//comments : arr1.concat(arr2)
 }
 
 /*  funky syntax error that I can't find
