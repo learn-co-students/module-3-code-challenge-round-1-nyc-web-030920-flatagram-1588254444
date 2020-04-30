@@ -23,23 +23,22 @@ window.addEventListener("DOMContentLoaded", (event) =>{
     const likesSpan = document.querySelector(".likes")
     
     function renderImage(image){
-        console.log(image)
-        const img = document.querySelector(".image")
-        const title = document.querySelector('.title')
-        commentsList.innerHTML = ""
-        renderComments(image.comments)
-        img.src = image.image
-        title.textContent = image.title
-        likesSpan.dataset.likes = image.likes
-        likesSpan.textContent = `${image.likes} Likes`
+        console.log(image);
+        const img = document.querySelector(".image");
+        const title = document.querySelector('.title');
+        commentsList.innerHTML = "";
+        image.comments.forEach(comment => renderComment(comment));
+        img.src = image.image;
+        title.textContent = image.title;
+        likesSpan.dataset.likes = image.likes;
+        likesSpan.textContent = `${image.likes} Likes`;
     }
 
-    function renderComments(commentsArray){
-        commentsArray.forEach(comment => {
-            const li = document.createElement("li")
-            li.textContent = comment.content
-            commentsList.append(li)
-        });
+    //refactor for one comment
+    function renderComment(comment){
+            const li = document.createElement("li");
+            li.textContent = comment.content;
+            commentsList.append(li);
     }
 
     likesDiv.addEventListener("click", (e) =>{
