@@ -7,6 +7,7 @@
 const baseUrl = 'http://localhost:3000/image';
 const dogCard = document.querySelector('.image-card');
 let dogObj = {};
+let form = document.querySelector('form');
 document.addEventListener('DOMContentLoaded', function(){
     
     function fetchDogInfo() {
@@ -46,13 +47,11 @@ document.addEventListener('DOMContentLoaded', function(){
             li.textContent = comment['content'];
             ul.append(li);
         })
-        console.log(comments);
     }
 
     dogCard.addEventListener('click', function(event){
         let eventTarget = event.target;
         if (eventTarget.className === 'like-button') {
-            console.log(eventTarget);
             dogObj['likes']++;
             fetch(baseUrl, {
                 method: 'PATCH',
@@ -64,9 +63,14 @@ document.addEventListener('DOMContentLoaded', function(){
             })
             .then(res => res.json())
             .then(fetchDogInfo);
-        }
+        } 
     })
 
+
+    document.addEventListener('submit', function(event){
+        let eventTarget = event.target;
+        console.log(eventTarget);
+    })
 
     fetchDogInfo()
 })
