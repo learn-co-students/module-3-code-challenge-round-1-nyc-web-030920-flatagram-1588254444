@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", event => {
 function setupLikeListener(){
     document.addEventListener("click", event => {
         if(event.target.className.indexOf("like-button") !== -1){
-            addLike();
+            addLike(event.target);
         }
     })
 }
@@ -66,11 +66,17 @@ function renderImageData(data){
     const img = imageCard.querySelector("img");
     img.src = data.image;
 
-    const likes = imageCard.querySelector(".likes");
-    const plural = data.likes === 1 ? "" : "s";
-    likes.innerText = `${data.likes} like${plural}`;
-
+    renderLikes(data.likes);
     renderComments(data);
+}
+
+function renderLikes(likeCount){
+    const likes = imageCard.querySelector(".likes");
+    const plural = likeCount === 1 ? "" : "s";
+    likes.innerText = `${likeCount} like${plural}`;
+
+    const likeButton = imageCard.querySelector(".like-button");
+    likeButton.dataset.likes = likeCount;
 }
 
 function renderComments(data){
@@ -85,8 +91,24 @@ function renderComments(data){
 // LIKES
 //////////////////////////////
 
-function addLike(){
-    
+function addLike(button){
+    const newLikes = parseInt(button.dataset.likes) + 1;
+
+    const likeBody = {
+        likes: newLikes
+    };
+
+    fetch(baseURL, {
+        method: "PATCH",
+        headers,
+        body: JSON.stringify(likeBody)
+    })
+    .then(res => res.json())
+    .then(data => {
+        // update the display
+        renderLikes(newLikes);
+    })
+    .catch(err => console.log("error", err));
 }
 
 //////////////////////////////
