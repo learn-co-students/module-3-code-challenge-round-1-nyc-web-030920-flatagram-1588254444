@@ -4,7 +4,8 @@
 oof, this is a real structural mishmash here
 - lots of reliance on global scope
 - mixing layers of data storage
-- I'm not 100% on the consistency of the global imageData object with the DB
+- strange matching conditions
+- I'm not 100% sold yet on the consistency of the global imageData object with the DB, but it seems OK
 */
 
 const baseURL = "http://localhost:3000/image";
