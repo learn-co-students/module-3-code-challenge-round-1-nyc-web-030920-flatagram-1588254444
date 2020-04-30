@@ -61,10 +61,10 @@ function addLike(){
         e.preventDefault()
         let likeInt = parseInt(likes.innerHTML)
         likeInt += 1
-        likes.innerText = likeInt
+        likes.innerText = `$likeInt`
 
         let newLikes = {
-            image_id: imageId
+            likeInt
         }
 
         fetch(baseUrl,{
@@ -106,9 +106,9 @@ function addComment(){
 
         let commentInput = document.querySelector('.comment-input')
         let commentWall = document.querySelector('.comments')
-
+        //  debugger
         let comment = document.createElement('li')
-        comment.innerText = commentInput.nodeValue
+        comment.innerText = commentInput.value
 
         commentWall.append(comment)
 
