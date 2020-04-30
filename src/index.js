@@ -36,20 +36,34 @@ document.addEventListener('DOMContentLoaded', () => {
     card.addEventListener('click', event => {
         if (event.target.className === 'like-button'){
         span = event.target.previousElementSibling
-        likes = parseInt(span.innerText)
+        let likes = parseInt(span.innerText)
         span.innerText = `${++likes} likes`
         fetch(imageURL, {
-            method: "PATCH"
-        headers: {
-                "accept": "application/json"
+            method: "PATCH",
+            headers: 
+        {
+                "accept": "application/json",
                 "content-type": "application/json"
             },
             body: JSON.stringify({
-                likes
+                "likes": likes
             })
         })
+        .then(res => res.json())
+        .then(obj => {span.innerText = `${likes} likes`})
         
-    }
+
+        }
+        
+    })
+    card.addEventListener('submit', event => {
+        event.preventDefault()
+        if (event.target.className === 'comment-button') {
+            
+            form = document.getElementsByClassName('comment-form')
+            console.log(form.comment)
+
+        }
     })
 
 
