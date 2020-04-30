@@ -93,14 +93,8 @@ document.addEventListener("DOMContentLoaded", event => {
             li.dataset.id = parseInt(li.previousSibling.dataset.id) + 1
             let list = commentUl.querySelectorAll('li')
             let listArray = Array.from(list)
+            let hash
 
-            return listArray.map(node => {
-                let obj = {
-                    "id": node.dataset.id,
-                    "content": node.innerText
-                }
-                return obj
-            })
         })
     }
 
