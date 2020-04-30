@@ -2,7 +2,8 @@
 
 document.addEventListener('DOMContentLoaded', () =>
 {
-const imgContainer = document.querySelector('.image-container')
+    const form = document.querySelector('.comment-form')
+    const imgContainer = document.querySelector('.image-container')
 
 fetch('http://localhost:3000/image')
 .then(response => response.json())
@@ -54,12 +55,34 @@ function createImage(image){
 imgContainer.addEventListener('click',function(event){
     
     if (event.target.className === 'like-button') {
+        currentImg = event.target.parentNode.parentNode
+        console.log(currentImg)
         likesSection = event.target.parentNode
-        likesSection.querySelector('.likes')
-        const currentLikes = likesSection.querySelector('.likes')
-        newLikes = `${parseInt(currentLikes.innerText[0]) + 1}`
-        console.log(newLikes)
+        const currentLikes = likesSection.querySelector('.likes').innerText[0]
+        const newLikes = parseInt(currentLikes) + 1 //couldnt get this to work 
+       
+        let id = currentImg.dataset.id
+
+        fetch(`http://localhost:3000/image/${id}`,{
+            method: 'PATCH',
+            headers: {'accept':'application/json',
+        'content-type':'application/json'},
+        body: JSON.stringify({'likes': newLikes})
+        })
+        .then(response => response.json())
+        .then(data => {
+            currentLikes[0].innerText = newLikes
+        })
+        
     }
+})
+
+form.addEventListener('submit',function(event){
+    commentForm = event.target.parentNode.parentNode
+    comment = event.target.comments.value 
+    console.log(comment)
+    
+
 })
 
 
