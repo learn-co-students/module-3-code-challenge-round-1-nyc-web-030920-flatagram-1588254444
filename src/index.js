@@ -1,5 +1,12 @@
 // write your code here
 
+/*
+oof, this is a real structural mishmash here
+- lots of reliance on global scope
+- mixing layers of data storage
+- I'm not 100% on the consistency of the global imageData object with the DB
+*/
+
 const baseURL = "http://localhost:3000/image";
 const headers = {
     "content-type": "application/json",
@@ -146,22 +153,24 @@ function renderIndividualComment(comment){
 //
 function addLike(button){
     updateLikes(1, button);
-    // const newLikes = parseInt(button.dataset.likes) + 1;
-    // setLikes(newLikes);
 }
 
+//
+//
 function addDownvote(button){
     updateLikes(-1, button);
-    // const newLikes = parseInt(button.dataset.likes) - 1;
-    // setLikes(newLikes);
 }
 
+//
+//
 function updateLikes(amount, button){
     const likeElement = button.parentNode.querySelector(".likes");
     const newLikes = parseInt(likeElement.dataset.likes) + amount;
     setLikes(newLikes);
 }
 
+//
+//
 function setLikes(newLikes){
     const likeBody = {
         likes: newLikes
