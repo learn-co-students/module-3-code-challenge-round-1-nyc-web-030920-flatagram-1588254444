@@ -5,6 +5,15 @@ window.addEventListener('DOMContentLoaded', (event) => {
             // console.log(data)
             imgcrd = document.querySelector('.image-card')
             // console.log(imgcrd)
+            commentSec = imgcrd.querySelector('.comments')
+            comments = data.comments
+            allcom = comments.forEach((e) => {
+               console.log(e)
+                li = document.createElement('li')
+                li.description = e.content
+                commentSec.appendChild(li)
+                return li
+            })
             imgcrd.innerHTML = 
             `<h2 class="title">${data.title}</h2>
             <img src="${data.image}" class="image" />
@@ -13,6 +22,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
               <button class="like-button">♥</button>
             </div>
             <ul class="comments">
+            ${comments}
             </ul>
             <form class="comment-form">
               <input
@@ -23,8 +33,5 @@ window.addEventListener('DOMContentLoaded', (event) => {
               />
               <button class="comment-button" type="submit">Post</button>
             </form>`
-            commentSec = document.querySelector('.comments')
-            console.log(commentSec)
-            
     })
 })
