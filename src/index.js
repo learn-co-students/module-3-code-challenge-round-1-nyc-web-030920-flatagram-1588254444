@@ -46,27 +46,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-
     }
 
     document.addEventListener("click", (e) => {
         e.preventDefault()
-        console.log(e.target.className === "like-button")
-       if (e.target.className === "like-button"){
-            let span= e.target.previousElementsSibling.innerText
-            console.log(span)
-            let likes = parseInt(span)
-            let newLikes = likes + 1
-       }
+        let likeButton = document.getElementsByClassName("like-button")[0]
+         if (e.target.className === likeButton){
+
+            let span = likeButton.previousElementSibling.innerText
+            let innerText = span.innerText
+        }
+  
+    // //     console.log(likeButton)
+    // // //     (e.target.className === "like-button")
+    //     if (e.target.className === likeButton){
+    //         let likes = getElementsByClassName("likes")[0]
+    //         let span = e.target.previousElementsSibling.innerText
+
+    //         let likes = parseInt(span)
+    //         let newLikes = likes + 1
+    //    }
     })
 
-    document.addEventListener('submit', e => {
-        e.preventDefault()
-        const commentForm = e.target
+    // document.addEventListener('submit', e => {
+    //     e.preventDefault()
+    //     const commentForm = e.target
 
-        const comment = form.comment.value
+    //     const comment = form.comment.value
     
-    })
+    // })
 
 
     getImages()
