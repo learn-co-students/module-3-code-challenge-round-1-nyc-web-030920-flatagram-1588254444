@@ -51,10 +51,19 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("click", (e) => {
         e.preventDefault()
         let likeButton = document.getElementsByClassName("like-button")[0]
-         if (e.target.className === likeButton){
+        let span = likeButton.previousElementSibling.innerText
+        console.log(span)
 
-            let span = likeButton.previousElementSibling.innerText
-            let innerText = span.innerText
+         if (e.target.className === "likeButton"){
+
+           let likes = parstIn(span) 
+           let newLikes = likes + 1
+        
+    
+
+            // let span = likeButton.previousElementSibling.innerText
+            // let innerText = span.innerText
+
         }
   
     // //     console.log(likeButton)
