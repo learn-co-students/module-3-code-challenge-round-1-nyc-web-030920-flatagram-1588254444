@@ -1,17 +1,19 @@
 // write your code here
 
 
-//1. fetch info from api, append it to <div class="image-card">
-//2. like button works and PATCH database with increased like number
+//√1. fetch info from api, append it to <div class="image-card">
+//√2. like button works and PATCH database with increased like number
 //3. can comment to a post/ not persistence
 const baseUrl = 'http://localhost:3000/image';
 const dogCard = document.querySelector('.image-card');
+let dogObj = {};
 document.addEventListener('DOMContentLoaded', function(){
     
     function fetchDogInfo() {
         fetch(baseUrl)
         .then(res => res.json())
         .then(function(result){
+            dogObj = result;
             showDog(result);
         })
     }
@@ -49,7 +51,20 @@ document.addEventListener('DOMContentLoaded', function(){
 
     dogCard.addEventListener('click', function(event){
         let eventTarget = event.target;
-        console.log()
+        if (eventTarget.className === 'like-button') {
+            console.log(eventTarget);
+            dogObj['likes']++;
+            fetch(baseUrl, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    accept: 'application/json'
+                },
+                body: JSON.stringify(dogObj)
+            })
+            .then(res => res.json())
+            .then(fetchDogInfo);
+        }
     })
 
 
