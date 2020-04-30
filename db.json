@@ -1,7 +1,7 @@
 {
   "image": {
     "title": "Coder dog",
-    "likes": 64,
+    "likes": 82,
     "image": "./assets/coder-dog.png",
     "comments": [
       {
@@ -15,6 +15,30 @@
       {
         "id": 3,
         "content": "Woof!"
+      },
+      {
+        "id": 4,
+        "content": "My boy!"
+      },
+      {
+        "id": 5,
+        "content": "baby dog"
+      },
+      {
+        "id": 6,
+        "content": "smart dog"
+      },
+      {
+        "id": 7,
+        "content": "love this dog"
+      },
+      {
+        "id": 8,
+        "content": "clever dog"
+      },
+      {
+        "id": 9,
+        "content": "send me your code"
       }
     ]
   }
