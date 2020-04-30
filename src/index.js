@@ -20,35 +20,38 @@ document.addEventListener("DOMContentLoaded", () => {
             <button class="like-button">♥</button>
         `
 
-        // const commentSection = document.createElement('h2')
-        // commentSection.className = 'comments'
-        // console.log(commentSection)
-        // imageCard.append(commentSection)
+        let imgComments = document.querySelector('.comments')
+        image.comments.forEach((comment) => {
+            let commentLi = document.createElement("li")
+            commentLi.innerText = comment.content
+            commentLi.id = `${comment.id}`
+            imgComments.append(commentLi)
+        })
     }
 
     document.addEventListener('click', event => {
         if(event.target.className === "like-button") {
             let likes = parseInt(event.target.previousElementSibling.innerText)
             likes++ 
-            // console.log(likes)
-
+    
             fetch(baseURL, {
                 method: "PATCH",
                 headers: requestHeaders,
                 body: JSON.stringify({"likes": likes})
             })
             .then(resp => resp.json())
-            .then(console.log)
+            .then(response => {
+                event.target.previousElementSibling.innerText = `${response.likes} Likes`
+            })
         }
-
     })
 
-
+    
 })
 
 /*
-- GET the image, including likes and comments
-- Click listener on the heart btn to increase image likes
+- GET the image, including √likes and comments
+- √Click listener on the heart btn to increase image likes
 - Submit listener on the form to add comments (not persistent)
 
 Have a working commit with all the Core Deliverables 1st!
