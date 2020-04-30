@@ -60,10 +60,10 @@ window.addEventListener("DOMContentLoaded", (event) =>{
     form.addEventListener("submit", (e) =>{
         e.preventDefault()
         const commentContent = document.querySelector(".comment-input")
-        const newComment = {}
-        newComment.id = 1
-        newComment.content = commentContent.value
-        renderComment(newComment)
+        const comment = {}
+        comment.id = 1
+        comment.content = commentContent.value
+        renderComment(comment)
         //adv deliverable
         fetch(`http://localhost:3000/image`, {
             method: 'POST',
@@ -71,7 +71,7 @@ window.addEventListener("DOMContentLoaded", (event) =>{
                 'accept': 'application/json',
                 'content-type': 'application/json'
             },
-            body: JSON.stringify({comment: newComment})
+            body: JSON.stringify(comments comment)
             })
             .then(response => response.json())
             .then(json => console.log(json))
