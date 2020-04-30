@@ -1,23 +1,21 @@
-
-// PATCH /image
-
-//Click on heart icon to increase image likes and see them when reloaded
-// Add a comment 
+const card = document.querySelector('.image-card')
+const url = `http://localhost:3000/image`
 
 document.addEventListener("DOMContentLoaded", event => {
-    const card = document.querySelector('.image-card')
-    const url = `http://localhost:3000/image`
-
     getUsers()
     likes()
     addComment()
-
+})
+    //  A C C E S S  D B 
     function getUsers() {
         fetch(url)
             .then(resp => resp.json())
-            .then(obj => renderUser(obj))
+            .then(obj => {
+                renderUser(obj)
+                console.log(obj)
+            })
     }
-
+    // I M P O R T  T O  D O M
     function renderUser(obj) {
         let title = obj.title
         let likes = obj.likes
@@ -35,11 +33,6 @@ document.addEventListener("DOMContentLoaded", event => {
 
         let commentUl = card.querySelector('ul.comments')
 
-        // console.log(commentUl)
-        // console.log(likesNode)
-        // console.log(heart)
-        // console.log(titleNode)
-        // console.log(imageNode)
 
         commentUl.innerHTML = ''
         obj.comments.forEach(comment => {
@@ -52,50 +45,44 @@ document.addEventListener("DOMContentLoaded", event => {
             commentUl.appendChild(li)
         })
     }
-
-    function likes() {
-        card.addEventListener('click', event => {
-            if (event.target.className === "like-button") {
-                let parent = event.target.parentNode
-                let likeNode = parent.querySelector('span')
-                let likes = parseInt(likeNode.innerText)
-                likes += 1
-                likeNode.innerText = `${likes} Likes`
-
-                fetch(url, {
-                    method: "PATCH",
-                    headers: {
-                        "Content-Type": 'application/json',
-                        "Accept": "application/json"
-                    },
-                    body: JSON.stringify({
-                        "likes": likes
-                    })
-                }).then(resp => resp.json())
-                    .then(resp => console.log(resp)) // NEED TO TWEAK TO UPDATE RELOAD PAGE, I KNOW
-            }
-        })
-    }
-
-    // ADD COMMENT AND THEN WORK BACK ON PESSIMISTIC RENDER FOR LIKES
-
+    
+    // P O S T  B U T T O N  L O G I C
     function addComment() {
         let form = document.querySelector('form.comment-form')
         let commentUl = card.querySelector('ul.comments')
-
+        
         form.addEventListener('submit', event => {
             event.preventDefault()
             let comment = form.querySelector('input').value
             let li = document.createElement('li')
             li.innerText = comment
-            // li.dataset.id = li.previousSibling.dataset.id + 1
             commentUl.appendChild(li)
-            li.dataset.id = parseInt(li.previousSibling.dataset.id) + 1
-            let list = commentUl.querySelectorAll('li')
-            let listArray = Array.from(list)
-            let hash
-
+            
         })
     }
+    
 
-})
+// L I K E  B U T T O N   L O G I C 
+function likes() {
+    card.addEventListener('click', event => {
+        if (event.target.className === "like-button") {
+            let parent = event.target.parentNode
+            let likeNode = parent.querySelector('span')
+            let likes = parseInt(likeNode.innerText)
+            likes += 1
+            likeNode.innerText = `${likes} Likes`
+            // DOES SAVE TO DB 
+            fetch(url, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": 'application/json',
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    "likes": likes
+                })
+            }).then(resp => resp.json())
+                .then(resp => console.log(resp)) // NEED TO TWEAK TO UPDATE RELOAD PAGE, I KNOW
+        }
+    })
+}
