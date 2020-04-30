@@ -54,5 +54,31 @@ function createCommentString(array){
 }
 
 function addComment(e){
-    
+    e.preventDefault()
+    const comments= document.getElementsByClassName("comments")[0]
+    comments.innerText= comments.innerText+"\n" + e.target[0].value
 }
+
+/*  funky syntax error that I can't find
+function addComment(e){
+    e.preventDefault()
+    fetch("http://localhost:3000/image").then(resp=>resp.json()).then(json=>{
+        fetch("http://localhost:3000/image",{
+            method:"PATCH",
+            headers:{"Content-Type": "application/json", "Accept": "application/json"},
+        body:JSON.stringify({"likes" : createCommentArr(json, e.target[0].value)})
+        .then(resp=>resp.json())
+        .then(console.log(json))
+    })
+ 
+
+}
+}
+
+function createCommentArr(json, text){
+    let obj= json.comments
+    let newID= parseInt(obj[obj.length-1].id)+1
+    obj.push({"id":newID.toString, "content":text})
+    return obj
+}
+*/
