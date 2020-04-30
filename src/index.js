@@ -1,8 +1,9 @@
 document.addEventListener("DOMContentLoaded", function (e) {
   getPic();
-  addlike()
+  addlike();
+  addComments()
 });
-//=============================================================
+//--------------------------------------------------------------------------
 function getPic() {
   fetch("http://localhost:3000/image")
     .then((resp) => resp.json())
@@ -10,7 +11,7 @@ function getPic() {
       pic(img);
     });
 }
-//==============================================================
+//--------------------------------------------------------------------------
 function pic(img) {
   let title = document.querySelector(".title");
   title.innerText = img.title;
@@ -20,7 +21,7 @@ function pic(img) {
   imgLikes.innerText = img.likes;
   imgComments(img);
 }
-//===================================================================
+//--------------------------------------------------------------------------
 function imgComments(img) {
   let comments = document.querySelector(".comments");
   comments.innerHTML = "";
@@ -28,11 +29,10 @@ function imgComments(img) {
     let li = document.createElement("li");
     li.innerText = c.content;
     li.dataset.id = c.id;
-    //console.log(c.content)
     comments.appendChild(li);
   });
 }
-//========================================================================
+//--------------------------------------------------------------------------
 function addlike() {
   let likeBtn = document.querySelector(".like-button");
   likeBtn.addEventListener("click", function (e) {
@@ -52,18 +52,16 @@ function addlike() {
       .then();
   });
 }
-  //-----------------------------------------------------------------------------------------
-  (function addComments() {
-    document.addEventListener("submit", function (e) {
-        e.preventDefault()
-        let input = e.target.comment.value
-        let comments = document.querySelector(".comments");
-        let li = document.createElement("li");
-        li.innerText = input
-        comments.appendChild(li);
+//-----------------------------------------------------------------------------------------
+function addComments() {
+  document.addEventListener("submit", function (e) {
+    e.preventDefault();
+    let input = e.target.comment.value;
+    let comments = document.querySelector(".comments");
+    let li = document.createElement("li");
+    li.innerText = input;
+    comments.appendChild(li);
 
-    
-
-    });
-  }
-)();
+    e.target.reset();
+  });
+}
