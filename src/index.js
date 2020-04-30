@@ -3,7 +3,7 @@
 
 //√1. fetch info from api, append it to <div class="image-card">
 //√2. like button works and PATCH database with increased like number
-//3. can comment to a post/ not persistence
+//√3. can comment to a post/ not persistence
 const baseUrl = 'http://localhost:3000/image';
 const dogCard = document.querySelector('.image-card');
 let dogObj = {};
@@ -63,13 +63,15 @@ document.addEventListener('DOMContentLoaded', function(){
             })
             .then(res => res.json())
             .then(fetchDogInfo);
-        } 
-    })
-
-
-    document.addEventListener('submit', function(event){
-        let eventTarget = event.target;
-        console.log(eventTarget);
+        } else if (eventTarget.className === 'comment-button') {
+            event.preventDefault();
+            let comment = eventTarget.parentElement.comment.value;
+            let ul = document.querySelector('.comments');
+            let li = document.createElement('li');
+            li.textContent = comment;
+            ul.append(li);
+            eventTarget.parentElement.reset();
+        }
     })
 
     fetchDogInfo()
