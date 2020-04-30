@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   imgCardDiv = document.querySelector('.image-card')
   form = document.querySelector('.comment-form')
+  formBtn = document.querySelector('.comment-button')
   h2 = document.querySelector('.title')
   img = document.querySelector('.image')
   likesSpan = document.querySelector('.likes')
@@ -34,12 +35,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })
 
-  form.addEventListener('submit', event => {
+  formBtn.addEventListener('click', event => {
     event.preventDefault()
+    let commentInput = form.children[0]
+    if (commentInput.value) {
+      let newCommentLi = document.createElement('li')
+      newCommentLi.innerText = commentInput.value
+      commentsUl.append(newCommentLi)
+      form.reset()
 
-    
+      let comments = []
+      commentsUl.childNodes.forEach(li => {
+        
+        if (li.nodeName === 'LI') {
+          comments.push({id: li.dataset.id, content: li.innerText})
+        }
+      })
 
-
+      fetch(endpoint, {
+        method: 'PATCH', 
+        headers,
+        body: JSON.stringify({
+          comments: comments
+        })
+      })
+      .then(resp => resp.json())
+      .then(console.log)
+    }
   })
 
 
@@ -64,10 +86,6 @@ function renderData(obj) {
   }
 }
 
-// As a user, I can:
-
-
-// Add a comment (no persistence needed)
 
 // As a user, I can:
 
@@ -82,6 +100,7 @@ let img;
 let likesSpan;
 let commentsUl;
 let likesBtn;
+let formBtn;
 
 
 
