@@ -2,10 +2,29 @@ window.addEventListener('DOMContentLoaded', (event) => {
     fetch('http://localhost:3000/image')
     .then(response => response.json())
     .then(data => {
-        data.forEach(function (element) {
-            imgcrd = document.getElementById('image-card')
-            console.log(imgcrd)
-
-        })
+            // console.log(data)
+            imgcrd = document.querySelector('.image-card')
+            // console.log(imgcrd)
+            imgcrd.innerHTML = 
+            `<h2 class="title">${data.title}</h2>
+            <img src="${data.image}" class="image" />
+            <div class="likes-section">
+              <span class="likes">${data.likes} likes</span>
+              <button class="like-button">♥</button>
+            </div>
+            <ul class="comments">
+            </ul>
+            <form class="comment-form">
+              <input
+                class="comment-input"
+                type="text"
+                name="comment"
+                placeholder="Add a comment..."
+              />
+              <button class="comment-button" type="submit">Post</button>
+            </form>`
+            commentSec = document.querySelector('.comments')
+            console.log(commentSec)
+            
     })
 })
