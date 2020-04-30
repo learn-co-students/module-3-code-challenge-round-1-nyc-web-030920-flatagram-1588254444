@@ -28,7 +28,7 @@ let h2Title= document.getElementsByTagName("h2")[0]
 function commentSection(pic){
 
     pic.comments.forEach(function(c){
-        likeNum.innerHTML=`${pic.likes} likes`
+        likeNum.innerHTML=pic.likes
         let li = document.createElement('li')
         li.innerText = c.content
        
@@ -37,27 +37,57 @@ function commentSection(pic){
 }
 
 //===============================
+let btn=document.getElementsByClassName("like-button")[0]
+let likes=parseInt(likeNum.innerText,10)
 
+function liked(){
+    btn.addEventListener("click",function(event){
 
-function likes(){
+likes++
+likeNum.innerText=`${likes} likes`
     fetch("http://localhost:3000/image",{
-        method:"POST",
+        method:"PATCH",
         headers:{
             "Content-Type":"application/json",
             "accept":"application/json"
         },
-        body:
-    })
-    
+        body:JSON.stringify({likes})
+     })
+     .then((resp)=>resp.json())
+     .then((json)=>console.log(json))
+   }) 
+
+
+
+
 
 }
+//======================================
+// function addComents(){
+// let
+
+//     fetch("http://localhost:3000/image",{
+//         method:"PATCH",
+//         headers:{
+//             "Content-Type":"application/json",
+//             "accept":"application/json"
+//         },
+//         body:JSON.stringify({comments})
+//      })
+//      .then((resp)=>resp.json())
+//      .then((json)=>console.log(json))
+//    }) 
+
+
+
+// }
 
 
 
 
 
 
-
-
+// addComents()
+liked()
 getImages()
 })// end dom
