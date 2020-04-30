@@ -1,7 +1,7 @@
 {
   "image": {
     "title": "Coder dog",
-    "likes": 9,
+    "likes": 20,
     "image": "./assets/coder-dog.png",
     "comments": [
       {
@@ -15,6 +15,12 @@
       {
         "id": 3,
         "content": "Woof!"
+      },
+      {
+        "content": "I HATE DOGS!"
+      },
+      {
+        "content": "NO SERIOUSLY, I HATE EM!"
       }
     ]
   }

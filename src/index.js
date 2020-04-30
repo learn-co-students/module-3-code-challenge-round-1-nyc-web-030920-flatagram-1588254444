@@ -13,12 +13,11 @@ document.addEventListener('DOMContentLoaded', (event) => { //dont think we need 
 
 const imgCard = document.querySelector(".image-card")
 
-// const imgLink = imgCont.querySelector 
+let allComments = []
 
 fetch(baseURL)
   .then(response => response.json())
   .then(post => {
-      imgCard.dataset.likes = post.likes
       imgCard.innerHTML = `
         <h2 class="title">${post.title}</h2>
         <img src="${post.image}" class="image" />
@@ -41,6 +40,7 @@ fetch(baseURL)
       `
       let comments = post.comments
         comments.forEach(comment => {
+            allComments.push(comment)
             addComment(comment)
         }) //end of forEach comment
     
@@ -61,26 +61,32 @@ fetch(baseURL)
             },
             body: JSON.stringify({likes: newLikes})
           })
-          .then(resp => {
+          .then(() => {
               let likeString = document.querySelector("span")
               likeString.textContent = `${newLikes} likes` 
 
           }) // end of likes patch
-
-      } // end of if click is like button
+      } // end of "if click is like button"
 
       else if (e.target.type === "submit"){
           let commentForm = e.target.parentNode
           let newComment = {}
           newComment.content = commentForm.querySelector(".comment-input").value
-            
+            allComments.push(newComment)
 
+            fetch(baseURL, {
+                method: 'PATCH',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({comments: allComments})
+              })
+              .then(() => {
+                addComment(newComment) 
+                commentForm.reset()
+              }) // end of comments patch, persistent but not adding commentID
 
-
-
-          addComment(newComment)
-          commentForm.reset()
-      }
+      } // end of "if click is submit new post"
 
   }) // end of event listener
 
@@ -92,7 +98,9 @@ fetch(baseURL)
   function addComment(comment) {
       let ul = document.querySelector(".comments")
       let li = document.createElement("li")
-      li.textContent = `- ${comment.content}`
+      let delBtn = <button class="del-btn">Delete</button>
+        li.textContent = `- ${comment.content}`
+        li.append(delBtn)
       ul.append(li)
   }
 
