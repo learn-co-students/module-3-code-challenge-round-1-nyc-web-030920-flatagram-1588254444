@@ -81,13 +81,24 @@ likeNum.innerText=`${likes} likes`
 
 
 // }
+function addComents(){
+    let form=document.getElementById("comment-form")
+    document.addEventListener("submit",function(event){
+        event.preventDefault()
+      let commentInput= document.getElementsByTagName("input")[0].value
+        let comments= document.querySelector(".comments")
+        let newComment=document.createElement("li")
+        newComment.innerText=commentInput
+        comments.appendChild(newComment)
+        event.target.reset()
+    })
+    }
 
 
 
 
 
-
-// addComents()
+addComents()
 liked()
 getImages()
 })// end dom
