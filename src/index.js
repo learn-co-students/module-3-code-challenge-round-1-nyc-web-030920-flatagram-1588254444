@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () =>
     const form = document.querySelector('.comment-form')
     const imgContainer = document.querySelector('.image-container')
 
+
 fetch('http://localhost:3000/image')
 .then(response => response.json())
 .then(image => {
@@ -78,9 +79,16 @@ imgContainer.addEventListener('click',function(event){
 })
 
 form.addEventListener('submit',function(event){
-    commentForm = event.target.parentNode.parentNode
-    comment = event.target.comments.value 
+    const imgContainer = document.querySelector('.image-container')
+    let commentForm = event.target.parentNode.parentNode
+    let oldComment = imgContainer.querySelector('.comments')
+    let newComment = event.target.comments.value 
+    let id = 
     console.log(comment)
+
+        })
+        
+    }
     
 
 })
