@@ -2,6 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', () =>
 {
+const imgContainer = document.querySelector('.image-container')
 
 fetch('http://localhost:3000/image')
 .then(response => response.json())
@@ -11,8 +12,11 @@ fetch('http://localhost:3000/image')
     
 })
 
+
+
+
 function createImage(image){
-    console.log(image)
+   
     const imgContainer = document.querySelector('.image-container')
     const newCard = document.createElement('div')
     newCard.className = 'image-card'
@@ -25,9 +29,9 @@ function createImage(image){
       <button class="like-button">♥</button>
     </div>
     <ul class="comments">
-      <li>${image.comments}</li>
-      <li>And replace them with the real ones</li>
-      <li>From the server</li>
+      <li>${image.comments[0].content}</li>
+      <li>${image.comments[1].content}</li>
+      <li>${image.comments[2].content}</li>
     </ul>
     <form class="comment-form">
       <input
@@ -40,13 +44,23 @@ function createImage(image){
     </form>`
 
     newCard.dataset.id = image.id 
-
     imgContainer.append(newCard)
 
 
 }
 
 
+
+imgContainer.addEventListener('click',function(event){
+    
+    if (event.target.className === 'like-button') {
+        likesSection = event.target.parentNode
+        likesSection.querySelector('.likes')
+        const currentLikes = likesSection.querySelector('.likes')
+        newLikes = `${parseInt(currentLikes.innerText[0]) + 1}`
+        console.log(newLikes)
+    }
+})
 
 
 
