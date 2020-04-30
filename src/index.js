@@ -35,3 +35,23 @@ window.addEventListener('DOMContentLoaded', (event) => {
             </form>`
     })
 })
+/* there is no time to redo my mistake so i will sudo code it. 
+I should have just used elementfindbyId or queryselector to get the elements 
+than change the values individually after i would have found the the comments
+section via queryselector('.comments') used for Each to get them displayed. 
+
+Adding a comment.
+add an event listner on the comments the event would have been submit.
+create li
+make li.description equal to the data.content
+find comment sect
+than appendchild the li
+
+like button 
+find button 
+add event listner for click action
+in listner
+like number = parseInt(like number) += 1
+
+
+ */ 
