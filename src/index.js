@@ -3,9 +3,9 @@
 ////load the image, likes and comments to the page
 ////remove the placeholder comments
 ////add click listener to heart button
-    //increment the likes on the DOM
-    //patch the likes in the DB
-//add a comment to the page (not the db)
+    ////increment the likes on the DOM
+    ////patch the likes in the DB
+////add a comment to the page (not the db)
 
 window.addEventListener("DOMContentLoaded", (event) =>{
     console.log("The DOM is here")
@@ -44,12 +44,32 @@ window.addEventListener("DOMContentLoaded", (event) =>{
 
     likesDiv.addEventListener("click", (e) =>{
         if (e.target.className === "like-button"){
-            console.log(likesSpan)
-            console.log(likesSpan.textContent)
-            console.log("I'm the like button!!")
+            likesSpan.dataset.likes++
+            let num = likesSpan.dataset.likes
+            likesSpan.textContent = `${num} Likes`
+            fetch(`http://localhost:3000/image`,{
+                method: 'PATCH',
+                headers: {
+                    'accept': 'application/json',
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({likes: num})
+                })
+                .then(response => response.json())
+                .then(json => console.log(json))
         }
     })
 
+    const form = document.querySelector(".comment-form")
+    form.addEventListener("submit", (e) =>{
+        e.preventDefault()
+        const commentContent = document.querySelector(".comment-input")
+        const li = document.createElement("li")
+        li.textContent = commentContent.value
+        commentsList.append(li)
+        form.reset()
+        console.log(e.target)
+    })
 
 
     getImage()
