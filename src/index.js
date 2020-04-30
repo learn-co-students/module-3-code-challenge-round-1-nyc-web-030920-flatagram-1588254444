@@ -9,6 +9,8 @@ const headers = {
 let imageCard = null;
 let commentList = null;
 
+let imageData = null;
+
 document.addEventListener("DOMContentLoaded", event => {
     console.log("DOM loaded");
 
@@ -17,6 +19,8 @@ document.addEventListener("DOMContentLoaded", event => {
 
     setupLikeListener();
     setupCommentListener();
+
+    setupCommentDeleteListener();
 
     getImage();
 });
@@ -42,6 +46,16 @@ function setupCommentListener(){
     })
 }
 
+//
+//
+function setupCommentDeleteListener(){
+    document.addEventListener("click", event => {
+        if(event.target.className.indexOf("delete") !== -1){
+            deleteComment(event.target);
+        }
+    });
+}
+
 //////////////////////////////
 // DISPLAY
 //////////////////////////////
@@ -52,6 +66,10 @@ function getImage(){
     fetch(baseURL)
     .then(res => res.json())
     .then(data => {
+        // set this for the sake of the comments
+        // it feels like there should be a separate resource/route for working with these
+        // in a real-world setting
+        imageData = data;
         renderImageData(data);
     })
     .catch(err => console.log("error", err));
@@ -70,6 +88,8 @@ function renderImageData(data){
     renderComments(data);
 }
 
+//
+//
 function renderLikes(likeCount){
     const likes = imageCard.querySelector(".likes");
     const plural = likeCount === 1 ? "" : "s";
@@ -79,6 +99,8 @@ function renderLikes(likeCount){
     likeButton.dataset.likes = likeCount;
 }
 
+//
+//
 function renderComments(data){
     commentList.innerHTML = "";
 
@@ -87,10 +109,23 @@ function renderComments(data){
     });
 }
 
+//
+//
+function renderIndividualComment(comment){
+    const li = document.createElement("li");
+    li.dataset.content = comment.content;
+    li.innerHTML = `
+        ${comment.content} <button class="delete" style="margin:2px; padding:2px;">X</button>
+    `;
+    commentList.append(li);
+}
+
 //////////////////////////////
 // LIKES
 //////////////////////////////
 
+//
+//
 function addLike(button){
     const newLikes = parseInt(button.dataset.likes) + 1;
 
@@ -106,6 +141,7 @@ function addLike(button){
     .then(res => res.json())
     .then(data => {
         // update the display
+        imageData = data;
         renderLikes(newLikes);
     })
     .catch(err => console.log("error", err));
@@ -115,21 +151,91 @@ function addLike(button){
 // COMMENTS
 //////////////////////////////
 
+/*
+INITIAL VALUES, just in case I need them
+
+"comments": [
+    {
+        "id": 1,
+        "content": "What a cute dog!"
+    },
+    {
+        "id": 2,
+        "content": "He has a nose for this!"
+    },
+    {
+        "id": 3,
+        "content": "Woof!"
+    }
+]
+*/
+
+//
+//
 function submitComment(form){
 
     if(form.comment.value){
+
+        // am I supposed to come up with a new ID for this?
+        // remaining consistent under deletion is not something I'm
+        // going to deal with right now
+
         const newComment = {
             content: form.comment.value
         };
-    
-        form.reset();
-    
-        renderIndividualComment(newComment);
+
+        // grab this from the image object
+        const commentBody = {
+            comments: [...imageData.comments, newComment]
+        };
+
+        updateComments(commentBody, form);
     }
 }
 
-function renderIndividualComment(comment){
-    const li = document.createElement("li");
-    li.innerText = comment.content;
-    commentList.append(li);
+//
+//
+function deleteComment(button){
+    const content = button.parentNode.dataset.content;
+
+    // I would normally want to do this based on matching ID
+    // but if those aren't auto-generated, then I'm not going to mess with it
+
+    const newComments = imageData.comments.filter(comment => {
+        return comment.content !== content;
+    });
+
+    const commentBody = {
+        comments: newComments
+    };
+
+    updateComments(commentBody);
+}
+
+//
+//
+function updateComments(commentBody, form = null){
+
+    fetch(baseURL, {
+        method: "PATCH",
+        headers,
+        body: JSON.stringify(commentBody)
+    })
+    .then(res => res.json())
+    .then(data => {
+        // imageData = data;
+        if (form){
+            form.reset();
+        }
+        getImage();
+    })
+    .catch(err => console.log("error", err));
+
+    /*
+    instead I'm going to just reload after persisting
+
+    form.reset();
+
+    renderIndividualComment(newComment);
+    */
 }
