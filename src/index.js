@@ -73,6 +73,7 @@ document.addEventListener(`DOMContentLoaded`, () => {
     })    
 
     //not persisting to database. I believe I'm formatting the body wrong. 
+    // AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
     function patchLikes(newCount){        
         fetch("http://localhost:3000/image"), {
             method: "PATCH",
