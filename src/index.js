@@ -12,18 +12,20 @@
 // downvote an image
 // delete a comment 
 
+// ^^ See the image received from the server, including its likes and comments when the page loads
+// ^^ Click on the heart icon to increase image likes, and still see them when I reload the page
+// ^^ Add a comment (no persistence needed)
+
 
 document.addEventListener('DOMContentLoaded', (event) => {
   console.log('DOM fully loaded and parsed');
 
   const url = 'http://localhost:3000/image'
 
-
   const getImages = () => {
     fetch(url)
     .then(r => r.json())
     .then(renderImageObj)
-    // .then(renderImage)
   }
 
   const renderImageObj = imageObject => {
@@ -36,7 +38,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     const img = document.querySelector('.image')
     img.src = imageObject.image 
-    
 
     imageObject.comments.forEach(comment => {
       const ul = document.querySelector('ul')
@@ -45,24 +46,36 @@ document.addEventListener('DOMContentLoaded', (event) => {
       li.innerHTML =  `
         ${comment.content}
       `
-
       ul.append(li)
       });
-    
-      const commentForm = document.querySelector('.comment-form')
-      commentForm.addEventListener('submit', (e) => {
-        e.preventDefault()
-        console.log('clicked')
-        // const comment = event.target.comment
-        // console.log(comment)
-    
-        
-      })
+      
   }
+
+  // listener on comment submit button
+  const commentForm = document.querySelector('.comment-form')
+
+  commentForm.addEventListener('submit', (e) => {
+    e.preventDefault()
+    let commentInput = document.querySelector('.comment-input')
+  
+    let userComment = commentInput.value
+    console.log('clicked post', userComment)
+
+    const ul = document.querySelector('ul')
+    const li = document.createElement('li')
+
+    li.innerHTML = `
+    ${userComment}
+    `
+    ul.append(li)
+    commentForm.reset()
+    
+  })
 
   // listener on like
   const heartbtn = document.querySelector('.like-button')
   console.log(heartbtn)
+
   heartbtn.addEventListener(`click`, (e) => {
 
     console.log("clicked")
@@ -70,6 +83,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     incrementLikes(1)
     const likeCounter = document.querySelector('.likes')
 
+    ///  persist likes to db
     fetch(url, {
       method: 'PATCH',
       headers: {
@@ -82,28 +96,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
     })
     .then(r => r.json())
 
-
   })
-
-
-  function incrementLikes (n) {
-    const likeCounter = document.querySelector('.likes')
-    let currentLikes = parseInt(likeCounter.textContent)
-    let newTotal = currentLikes + n
-    likeCounter.textContent = `${parseInt(newTotal)} likes`
-  }
-
-
-
-  // const ul = document.getElementsByTagName('ul')
-  //   const li = document.createElement
-  //   ul.innerHTML =  `
-
-  //   `
-
-
-
-    
+  
   getImages()
 });
 
+// helper function for likes
+function incrementLikes (n) {
+  const likeCounter = document.querySelector('.likes')
+  let currentLikes = parseInt(likeCounter.textContent)
+  let newTotal = currentLikes + n
+  likeCounter.textContent = `${parseInt(newTotal)} likes`
+}
