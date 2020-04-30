@@ -3,7 +3,7 @@
 // √ set image container info = to ^
 // √ find the heart + likes "likes-section"
 // √ event listener on the heart 
-// patch likes +=1 to DB
+// √ patch likes +=1 to DB
 // event listener on the post
 // patch post to DB  
 
@@ -23,7 +23,7 @@ fetch(baseURL)
         <h2 class="title">${post.title}</h2>
         <img src="${post.image}" class="image" />
         <div class="likes-section">
-          <span class="likes">`${post.likes} likes`</span>
+          <span class="likes"> ${post.likes} likes</span>
           <button class="like-button">♥</button>
         </div>
         <ul class="comments">
@@ -53,8 +53,7 @@ fetch(baseURL)
           let likeSection = e.target.parentNode
           let likes = parseInt(likeSection.querySelector("span").textContent)
           newLikes = likes +=1
-          
-
+        
         fetch(baseURL, {
             method: 'PATCH',
             headers: {
@@ -63,14 +62,25 @@ fetch(baseURL)
             body: JSON.stringify({likes: newLikes})
           })
           .then(resp => {
-              console.log(resp)
-          })
-          
+              let likeString = document.querySelector("span")
+              likeString.textContent = `${newLikes} likes` 
 
+          }) // end of likes patch
 
       } // end of if click is like button
 
+      else if (e.target.type === "submit"){
+          let commentForm = e.target.parentNode
+          let newComment = {}
+          newComment.content = commentForm.querySelector(".comment-input").value
+            
 
+
+
+
+          addComment(newComment)
+          commentForm.reset()
+      }
 
   }) // end of event listener
 
@@ -82,7 +92,6 @@ fetch(baseURL)
   function addComment(comment) {
       let ul = document.querySelector(".comments")
       let li = document.createElement("li")
-      li.dataset.id = comment.id
       li.textContent = `- ${comment.content}`
       ul.append(li)
   }
