@@ -43,7 +43,39 @@ function increaseLike(event) {
      <li>He has a nose for this!</li>
      <li>Woof!</li>`
     
-    const image = document.getElemen
+    const image = document.getElementsByClassName('image')[0]
+    image.src = "./assets/coder-dog.png"
+
+    const title = document.getElementsByClassName('title')[0]
+    title.textContent = "Coder dog"
+
+
+   const  commentButton = document.getElementsByClassName('comment-form')[0]
+    commentButton.addEventListener('submit', comment)
+
+   function comment(event){
+       event.preventDefault()
+   const  input =  document.getElementsByClassName('comment-input')[0]
+
+      console.log(input.innerHTML) 
+      comments = input.innerHTML.value
+    
+
+       
+    fetch('http://localhost:3000/image',{
+        method: "PATCH",
+        header: {
+            'Content-Type': 'application/json',  
+            'Accept': 'application/json'
+            },
+        body: JSON.stringify({comments})
+    })
+
+
+    // commentButton.name = .value
+      
+
+    }
 
 
 
