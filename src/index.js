@@ -9,6 +9,7 @@ const newHeaders = {
 const comments = document.querySelector('.comments')
 const likes = document.querySelector('.likes')
 const image = document.querySelector('.image')
+const commentForm = document.querySelector('.comment-form')
 
 document.addEventListener('DOMContentLoaded', (event) => {
     console.log('hi buddy :)')
@@ -25,6 +26,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
         let likesObj = {likes: likesNum}
         updateLikeCount(likesObj)
 
+    })
+
+    commentForm.addEventListener('submit', function(event) {
+        event.preventDefault()
+        // let comment = {}
+        let comment = {"comments": { commentForm.comment.value } }
+
+        console.log(comment)
     })
 
 
@@ -59,3 +68,12 @@ function updateLikeCount(likes) {
         .then(console.log)
 }
 
+function addComment(comment) {
+    fetch(flatagramUrl, {
+        method: 'POST',
+        body: JSON.stringify(comment),
+        headers: newHeaders
+    })
+        .then(response => response.json())
+        .then(console.log)
+}
