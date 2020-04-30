@@ -64,17 +64,17 @@ window.addEventListener("DOMContentLoaded", (event) =>{
         comment.id = 1
         comment.content = commentContent.value
         renderComment(comment)
-        //adv deliverable
-        fetch(`http://localhost:3000/image`, {
-            method: 'POST',
-            headers: {
-                'accept': 'application/json',
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(comments comment)
-            })
-            .then(response => response.json())
-            .then(json => console.log(json))
+        //adv deliverable couldn't get it to work :(
+        // fetch(`http://localhost:3000/image`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'accept': 'application/json',
+        //         'content-type': 'application/json'
+        //     },
+        //     body: JSON.stringify(comments.comment)
+        //     })
+        //     .then(response => response.json())
+        //     .then(json => console.log(json))
         form.reset()
     })
 
