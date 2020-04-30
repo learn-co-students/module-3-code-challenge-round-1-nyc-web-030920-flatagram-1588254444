@@ -11,18 +11,18 @@ const baseUrl = 'http://localhost:3000/image';
 const dogCard = document.querySelector('.image-card');
 let dogObj = {};
 let form = document.querySelector('form');
-document.addEventListener('DOMContentLoaded', function(){
-    
+document.addEventListener('DOMContentLoaded', function () {
+
     function fetchDogInfo() {
         fetch(baseUrl)
-        .then(res => res.json())
-        .then(function(result){
-            dogObj = result;
-            showDog(result);
-        })
+            .then(res => res.json())
+            .then(function (result) {
+                dogObj = result;
+                showDog(result);
+            })
     }
 
-    function showDog(result){
+    function showDog(result) {
         dogCard.innerHTML = ``;
         dogCard.innerHTML = `
         <h2 class="title">${result['title']}</h2>
@@ -45,18 +45,22 @@ document.addEventListener('DOMContentLoaded', function(){
         `
         let ul = document.querySelector('.comments');
         const comments = result['comments'];
-        comments.forEach(function(comment){
-            let li = document.createElement('li')
-            li.textContent = comment['content'];
-            let deleteButton = document.createElement('button');
-            deleteButton.textContent = 'delete';
-            deleteButton.setAttribute('class', 'delete-comment');
-            li.append(deleteButton);
-            ul.append(li);
+        comments.forEach(function (comment) {
+            if (comment['content']) {
+                console.log('has content');
+                let li = document.createElement('li')
+                li.textContent = comment['content'];
+                li.dataset.commentId = comment.id;
+                let deleteButton = document.createElement('button');
+                deleteButton.textContent = 'delete';
+                deleteButton.setAttribute('class', 'delete-comment');
+                li.append(deleteButton);
+                ul.append(li);
+            }
         })
     }
 
-    dogCard.addEventListener('click', function(event){
+    dogCard.addEventListener('click', function (event) {
         let eventTarget = event.target;
         if (eventTarget.className === 'like-button') {
             dogObj['likes']++;
@@ -68,8 +72,8 @@ document.addEventListener('DOMContentLoaded', function(){
                 },
                 body: JSON.stringify(dogObj)
             })
-            .then(res => res.json())
-            .then(fetchDogInfo);
+                .then(res => res.json())
+                .then(fetchDogInfo);
         } else if (eventTarget.className === 'comment-button') {
             event.preventDefault();
             let comment = eventTarget.parentElement.comment.value;
@@ -80,10 +84,10 @@ document.addEventListener('DOMContentLoaded', function(){
             // li.textContent = comment;
             // ul.append(li);
             // eventTarget.parentElement.reset();
-            
+
             //persistence comment code, line 85 - 97
             let id = dogObj['comments'].length + 1;
-            let newComment = {'id': id, 'content': comment}
+            let newComment = { 'id': id, 'content': comment }
             dogObj['comments'].push(newComment);
             fetch(baseUrl, {
                 method: 'PATCH',
@@ -93,8 +97,8 @@ document.addEventListener('DOMContentLoaded', function(){
                 },
                 body: JSON.stringify(dogObj)
             })
-            .then(res => res.json())
-            .then(fetchDogInfo);
+                .then(res => res.json())
+                .then(fetchDogInfo);
         }
     })
 
