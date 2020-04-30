@@ -64,6 +64,17 @@ window.addEventListener("DOMContentLoaded", (event) =>{
         newComment.id = 1
         newComment.content = commentContent.value
         renderComment(newComment)
+        //adv deliverable
+        fetch(`http://localhost:3000/image`, {
+            method: 'POST',
+            headers: {
+                'accept': 'application/json',
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({comment: newComment})
+            })
+            .then(response => response.json())
+            .then(json => console.log(json))
         form.reset()
     })
 
