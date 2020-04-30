@@ -1,1 +1,125 @@
 // write your code here
+
+// get images / likes / comments onto the dom - some post request for new ones
+// image already there
+// just persist likes into db 
+
+// like button  add listener to heart 
+// listener on post button
+// patch likes to database 
+// advanced ////
+// persist comments too 
+// downvote an image
+// delete a comment 
+
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  console.log('DOM fully loaded and parsed');
+
+  const url = 'http://localhost:3000/image'
+
+
+  const getImages = () => {
+    fetch(url)
+    .then(r => r.json())
+    .then(renderImageObj)
+    // .then(renderImage)
+  }
+
+  const renderImageObj = imageObject => {
+
+    const title = document.querySelector('.title')
+    title.textContent = imageObject.title
+
+    const likes = document.querySelector('.likes')
+    likes.textContent = `${imageObject.likes} likes` //likes text removed for now
+
+    const img = document.querySelector('.image')
+    img.src = imageObject.image 
+    
+
+    imageObject.comments.forEach(comment => {
+      const ul = document.querySelector('ul')
+      const li = document.createElement('li')
+
+      li.innerHTML =  `
+        <li>${comment.content}</li>
+      `
+
+      ul.append(li)
+      });
+    
+  }
+
+  // listener on like
+  const heartbtn = document.querySelector('.like-button')
+  console.log(heartbtn)
+  heartbtn.addEventListener(`click`, (e) => {
+
+    console.log("clicked")
+    
+    incrementLikes(1)
+    const likeCounter = document.querySelector('.likes')
+
+    fetch(url, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        likes: likeCounter.textContent
+      })
+    })
+    .then(r => r.json())
+
+
+  })
+
+
+  function incrementLikes (n) {
+    const likeCounter = document.querySelector('.likes')
+    let currentLikes = parseInt(likeCounter.textContent)
+    let newTotal = currentLikes + n
+    likeCounter.textContent = `${parseInt(newTotal)} likes`
+  }
+
+
+  // const = commentForm = document.querySelector('.comment-form')
+  // commentForm.addEventListener('submit', (e) => {
+  //   e.preventDefault()
+  //   console.log('clicked')
+  //   const comment = event.target.comment.value
+  //   console.log(comment)
+  // })
+  // const ul = document.getElementsByTagName('ul')
+  //   const li = document.createElement
+  //   ul.innerHTML =  `
+
+  //   `
+
+  
+  // const renderImage = images => {
+  //   image.for (const property in object) {
+  //     console.log(`${property}: ${object[property]}`);
+  //   }
+    
+  //   }
+    
+
+
+    // let keys = Object.keys(images)
+    // console.log(keys)
+
+    // images.forEach(image => {
+    //   console.log(image)
+    // });
+
+    // const img = document.querySelector('.image')
+    // img.src = dog.image
+  
+
+    
+  getImages()
+});
+
