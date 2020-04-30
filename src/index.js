@@ -3,12 +3,14 @@
 
 const flatagramUrl = 'http://localhost:3000/image'
 const newHeaders = {
-    "Content-type": "application/json"
+    "Content-type": "application/json",
+    "Accept": "application/json"
 }
 
 const comments = document.querySelector('.comments')
 const likes = document.querySelector('.likes')
 const image = document.querySelector('.image')
+const title = document.querySelector('.title')
 const commentForm = document.querySelector('.comment-form')
 
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -30,13 +32,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     commentForm.addEventListener('submit', function(event) {
         event.preventDefault()
-        // let comment = {}
-        // let comment = {"comments": { `${commentForm.comment.value}` } }
+        
+        
+        // addComment(comment) // no matter what variable i pass here
+        // it ends up just deleting the rest of the comments and doesn't give an id
 
         let newComment = document.createElement('li')
         newComment.innerText = commentForm.comment.value
         comments.appendChild(newComment)
-        // console.log(comment)
+        commentForm.reset()
+
     })
 
 
@@ -52,6 +57,7 @@ function loadImage() {
         .then(load => {
             image.src = load.image
             likes.innerText = load.likes
+            title.innerText = load.title // wasn't in the deliverables ?
  
             load.comments.forEach(comment => {
                 let li = document.createElement('li')
@@ -68,10 +74,12 @@ function updateLikeCount(likes) {
         headers: newHeaders
     })
         .then(response => response.json())
-        .then(console.log)
+        // .then(console.log)
 }
 
 function addComment(comment) {
+
+    /// wasn't able to get this nested object to post correctly, unsure why :(
     fetch(flatagramUrl, {
         method: 'POST',
         body: JSON.stringify(comment),
