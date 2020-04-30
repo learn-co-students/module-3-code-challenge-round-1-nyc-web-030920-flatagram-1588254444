@@ -3,20 +3,14 @@
 document.addEventListener("DOMContentLoaded", function(event){
  const requestHeader = { "Content-Type": "application/json", "Accept":"application/json"}   
  const imageCard = document.getElementsByClassName("image-card")[0]
- comments()
  fetch("http://localhost:3000/image")
  .then((resp) => resp.json())
  .then((data) => {
      console.log(data)
-         imageCard.innerHTML = `
-         <h2 class="title"> ${data.title}</h2>
-        <img src= ${data.image} class="image" />
-        <div class="likes-section">
-          <span class="likes">${data.likes}</span>
-          <button class="like-button">♥</button>
-         `
-            comments()
-
+         let child = imageCard.childNodes
+         child[1].textContent = data.title
+         child[3].src = data.image
+        comments()
         })
          function likeButton(){
          const likeSection = document.getElementsByClassName("like-button")[0]
@@ -39,11 +33,10 @@ document.addEventListener("DOMContentLoaded", function(event){
     fetch("http://localhost:3000/image")
     .then((resp) => resp.json())
     .then((picture) => {
-        console.log(picture)
         picture.comments.forEach(function(comment){
-            let li = document.createElement("li")
-            li.innerHTML = `${comment.content}` 
-            imageCard.appendChild(li)
+            let p = document.createElement("p")
+            p.innerHTML = `${comment.content}` 
+            showComment.appendChild(p)
         })
     })
    }
