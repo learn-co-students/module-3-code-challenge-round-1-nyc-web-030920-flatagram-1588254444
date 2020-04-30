@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const picLikes = document.getElementsByClassName('likes')[0]
             const picLink = document.getElementsByClassName('image')[0]
             const picComments = document.getElementsByClassName('comments')[0]
+            picComments.removeChild(picComments.firstChild)
             console.log(x.title)
             picTitle.innerText = x.title
             picLikes.innerText = `${x.likes} likes`
@@ -26,13 +27,28 @@ document.addEventListener('DOMContentLoaded', function () {
                 commentLi.innerText = comment.content
                 picComments.appendChild(commentLi)
             })
-            
+
+            }
 
         }
         fetch('http://localhost:3000/image')
         .then(response => response.json())
         .then(data => displayFunction(data))
-    }
-
     getData()
+    function likePic() {
+    const likeBtn = document.getElementsByClassName('like-button')[0]
+    likeBtn.addEventListener('click', function () {
+        let newLikes = x.likes++
+        console.log(newLikes)
+        fetch('http://localhost:3000/image', {
+            method: 'PATCH',
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            body: JSON.stringify({likes: newLikes})
+        })
+        .then(getData())
+    }
+}
 })
