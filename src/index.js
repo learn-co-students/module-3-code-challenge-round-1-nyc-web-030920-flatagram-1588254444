@@ -4,8 +4,10 @@
 // √ find the heart + likes "likes-section"
 // √ event listener on the heart 
 // √ patch likes +=1 to DB
-// event listener on the post
-// patch post to DB  
+// √ event listener on the post
+// √ patch post to DB  
+// √ add delete button to comments (not sure if I did this right )
+// remove comment if deleted
 
 const baseURL = "http://localhost:3000/image"
 
@@ -26,7 +28,6 @@ fetch(baseURL)
           <button class="like-button">♥</button>
         </div>
         <ul class="comments">
-
         </ul>
         <form class="comment-form">
             <input
@@ -88,19 +89,19 @@ fetch(baseURL)
 
       } // end of "if click is submit new post"
 
-  }) // end of event listener
+            else if (e.target.className === "del-btn"){
+                console.log(e.target)
+                // e.target.remove()
+              } // end of delete
 
-
-
+  }) // end of click listener
 
   // Functionz-----------------------------
 
   function addComment(comment) {
       let ul = document.querySelector(".comments")
       let li = document.createElement("li")
-      let delBtn = <button class="del-btn">Delete</button>
-        li.textContent = `- ${comment.content}`
-        li.append(delBtn)
+      li.innerHTML = `- ${comment.content} <button class="del-btn">Delete</button>`
       ul.append(li)
   }
 
