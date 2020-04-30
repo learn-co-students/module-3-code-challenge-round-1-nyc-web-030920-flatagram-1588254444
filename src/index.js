@@ -8,15 +8,16 @@
 //function addComment
 //no fetch just add to DOM
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('test')
-
+   getData()
     function getData() {
         function displayFunction(x) {
             const picTitle = document.getElementsByClassName('title')[0]
             const picLikes = document.getElementsByClassName('likes')[0]
             const picLink = document.getElementsByClassName('image')[0]
             const picComments = document.getElementsByClassName('comments')[0]
-            picComments.removeChild(picComments.firstChild)
+            while(picComments.firstChild) {
+                picComments.removeChild(picComments.firstChild)
+            }
             console.log(x.title)
             picTitle.innerText = x.title
             picLikes.innerText = `${x.likes} likes`
@@ -30,25 +31,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
             }
 
-        }
+        
         fetch('http://localhost:3000/image')
         .then(response => response.json())
         .then(data => displayFunction(data))
-    getData()
+    }
+  
     function likePic() {
     const likeBtn = document.getElementsByClassName('like-button')[0]
-    likeBtn.addEventListener('click', function () {
-        let newLikes = x.likes++
-        console.log(newLikes)
+    likeBtn.addEventListener('click', function (event) {
+        event.preventDefault()
         fetch('http://localhost:3000/image', {
             method: 'PATCH',
             headers: {
                 "accept": "application/json",
                 "content-type": "application/json"
             },
-            body: JSON.stringify({likes: newLikes})
+            body: JSON.stringify({likes: likes++})
         })
         .then(getData())
-    }
+    })
+}
+likePic()
+function addComment() {
+    const commentForm = document.getElementsByClassName('comment-form')[0]
+    commentForm.addEventListener('submit', function (event) {
+        event.preventDefault()
+        let newComment = document.createElement('li')
+        let inputBox = document.getElementsByClassName('comment-input')[0]
+        newComment.innerText = inputBox.value
+        const picComments = document.getElementsByClassName('comments')[0]
+        picComments.appendChild(newComment)
+        commentForm.reset()
+})
+addComment()
 }
 })
