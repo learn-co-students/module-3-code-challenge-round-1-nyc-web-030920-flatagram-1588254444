@@ -11,6 +11,10 @@ window.addEventListener("DOMContentLoaded", (event) =>{
     console.log("The DOM is here")
 
     const baseUrl = "http://localhost:3000/image"
+    const form = document.querySelector(".comment-form")
+    const commentsList = document.querySelector(".comments")
+    const likesDiv = document.querySelector(".likes-section")
+    const likesSpan = document.querySelector(".likes")
 
     function getImage(){
         fetch(`${baseUrl}`)
@@ -18,12 +22,7 @@ window.addEventListener("DOMContentLoaded", (event) =>{
             .then(image => renderImage(image))
     }
     
-    const commentsList = document.querySelector(".comments")
-    const likesDiv = document.querySelector(".likes-section")
-    const likesSpan = document.querySelector(".likes")
-    
     function renderImage(image){
-        console.log(image);
         const img = document.querySelector(".image");
         const title = document.querySelector('.title');
         commentsList.innerHTML = "";
@@ -34,7 +33,6 @@ window.addEventListener("DOMContentLoaded", (event) =>{
         likesSpan.textContent = `${image.likes} Likes`;
     }
 
-    //refactor for one comment
     function renderComment(comment){
             const li = document.createElement("li");
             li.textContent = comment.content;
@@ -46,7 +44,7 @@ window.addEventListener("DOMContentLoaded", (event) =>{
             likesSpan.dataset.likes++
             let num = likesSpan.dataset.likes
             likesSpan.textContent = `${num} Likes`
-            fetch(`http://localhost:3000/image`,{
+            fetch(`${baseUrl}`,{
                 method: 'PATCH',
                 headers: {
                     'accept': 'application/json',
@@ -59,17 +57,15 @@ window.addEventListener("DOMContentLoaded", (event) =>{
         }
     })
 
-    const form = document.querySelector(".comment-form")
     form.addEventListener("submit", (e) =>{
         e.preventDefault()
         const commentContent = document.querySelector(".comment-input")
-        const li = document.createElement("li")
-        li.textContent = commentContent.value
-        commentsList.append(li)
+        const newComment = {}
+        newComment.id = 1
+        newComment.content = commentContent.value
+        renderComment(newComment)
         form.reset()
-        console.log(e.target)
     })
-
 
     getImage()
 //!END OF DOM LISTENER
