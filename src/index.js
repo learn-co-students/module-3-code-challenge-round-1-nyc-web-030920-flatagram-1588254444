@@ -43,12 +43,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
       const li = document.createElement('li')
 
       li.innerHTML =  `
-        <li>${comment.content}</li>
+        ${comment.content}
       `
 
       ul.append(li)
       });
     
+      const commentForm = document.querySelector('.comment-form')
+      commentForm.addEventListener('submit', (e) => {
+        e.preventDefault()
+        console.log('clicked')
+        // const comment = event.target.comment
+        // console.log(comment)
+    
+        
+      })
   }
 
   // listener on like
@@ -85,39 +94,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
   }
 
 
-  // const = commentForm = document.querySelector('.comment-form')
-  // commentForm.addEventListener('submit', (e) => {
-  //   e.preventDefault()
-  //   console.log('clicked')
-  //   const comment = event.target.comment.value
-  //   console.log(comment)
-  // })
+
   // const ul = document.getElementsByTagName('ul')
   //   const li = document.createElement
   //   ul.innerHTML =  `
 
   //   `
 
-  
-  // const renderImage = images => {
-  //   image.for (const property in object) {
-  //     console.log(`${property}: ${object[property]}`);
-  //   }
-    
-  //   }
-    
 
-
-    // let keys = Object.keys(images)
-    // console.log(keys)
-
-    // images.forEach(image => {
-    //   console.log(image)
-    // });
-
-    // const img = document.querySelector('.image')
-    // img.src = dog.image
-  
 
     
   getImages()
