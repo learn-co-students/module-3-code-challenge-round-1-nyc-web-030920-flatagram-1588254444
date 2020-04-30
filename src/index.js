@@ -10,8 +10,8 @@ document.addEventListener("DOMContentLoaded",function(){
         })
 
     }
-//================================
-function loadImage(pic){
+
+    function loadImage(pic){
     h2Title.innerHTML=pic.title
 
     pup.src= pic.image
@@ -22,7 +22,6 @@ function loadImage(pic){
 
 
 
-//===============================
 let likeNum=document.getElementsByTagName("span")[0]
 let h2Title= document.getElementsByTagName("h2")[0]
 function commentSection(pic){
@@ -36,7 +35,6 @@ function commentSection(pic){
     })
 }
 
-//===============================
 let btn=document.getElementsByClassName("like-button")[0]
 let likes=parseInt(likeNum.innerText,10)
 
@@ -62,7 +60,6 @@ likeNum.innerText=`${likes} likes`
 
 
 }
-//======================================
 // function addComents(){
 // let
 
@@ -86,10 +83,10 @@ function addComents(){
     document.addEventListener("submit",function(event){
         event.preventDefault()
       let commentInput= document.getElementsByTagName("input")[0].value
-        let comments= document.querySelector(".comments")
+        let commentsList= document.getElementsByClassName("comments")[0]
         let newComment=document.createElement("li")
         newComment.innerText=commentInput
-        comments.appendChild(newComment)
+        commentsList.appendChild(newComment)
         event.target.reset()
     })
     }
