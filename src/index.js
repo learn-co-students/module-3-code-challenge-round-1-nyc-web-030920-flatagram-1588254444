@@ -36,6 +36,14 @@ document.addEventListener('DOMContentLoaded', () => {
         //put on DOM
         likes.textContent = `${numLikes} likes`;
         //then send to db
+        //first get the likes from the server
+        //then in that update them
+        //should give access to the image object on server
+        fetch('http://localhost:3000/image')
+        .then(response => response.json())
+        .then(image => {
+            
+        })
         fetch('http://localhost:3000/image', {
             method: "PATCH",
             headers : {
@@ -48,5 +56,23 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(console.log('updated'))
     })
 
+    function getImage()
+    {
+        //get the image from the server
+        //display it
+        fetch('http://localhost:3000/image')
+        .then(resp => resp.json)
+        .then(data => {
+            //get the image on DOM
+            let imageCard = document.querySelector('.image-card');
+            let kids = imageCard.childNodes; //gets all the children
+            console.log(kids)
+            console.log(data.title)
+            //h2
+            kids[1].textContent = data.title;
+        })
+    }
+
     showComments();
+    getImage();
 })
