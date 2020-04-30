@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
   commentForm.addEventListener('submit', (e) => {
     e.preventDefault()
+
     let commentInput = document.querySelector('.comment-input')
   
     let userComment = commentInput.value
@@ -69,6 +70,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     `
     ul.append(li)
     commentForm.reset()
+
+  
     
   })
 
@@ -108,3 +111,32 @@ function incrementLikes (n) {
   let newTotal = currentLikes + n
   likeCounter.textContent = `${parseInt(newTotal)} likes`
 }
+
+
+
+// function getCommentArray () {
+//   const fetchArray
+//     fetch(url)
+//     .then(r => r.json())
+//     .then(commentArray)
+
+//     const commentArray = () => {
+
+//       imageObject.comments.forEach(comment => {
+
+//         });
+//     }
+  
+
+  // fetch(url, {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     'Accept': 'application/json',
+  //   },
+  //   body: JSON.stringify({ 
+  //     comments: 
+  //   })
+  // })
+//   fetchArray()
+// }
