@@ -5,6 +5,15 @@ const headers = {
   'Accept': 'application/json'
 }
 
+let imgCardDiv;
+let form;
+let h2; 
+let img;
+let likesSpan;
+let commentsUl;
+let likesBtn;
+let formBtn;
+
 document.addEventListener('DOMContentLoaded', () => {
 
   imgCardDiv = document.querySelector('.image-card')
@@ -40,8 +49,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let commentInput = form.children[0]
     if (commentInput.value) {
       let newCommentLi = document.createElement('li')
+      let lastLi = commentsUl.lastChild.previousSibling
+      let idValue = lastLi.dataset.id
+      
       newCommentLi.innerText = commentInput.value
+      newCommentLi.dataset.id = ++idValue
       commentsUl.append(newCommentLi)
+
       form.reset()
 
       let comments = []
@@ -61,11 +75,9 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .then(resp => resp.json())
       .then(console.log)
+
     }
   })
-
-
-
 
 })
 
@@ -92,26 +104,4 @@ function renderData(obj) {
 // Still see the comments written after reloading the page
 // Downvote an image
 // Delete a comment
-
-let imgCardDiv;
-let form;
-let h2; 
-let img;
-let likesSpan;
-let commentsUl;
-let likesBtn;
-let formBtn;
-
-
-
-// comments: Array(3)
-// 0: {id: 1, content: "What a cute dog!"}
-// 1: {id: 2, content: "He has a nose for this!"}
-// 2: {id: 3, content: "Woof!"}
-// length: 3
-// __proto__: Array(0)
-// image: "./assets/coder-dog.png"
-// likes: 0
-// title: "Coder dog"
-
 
