@@ -22,22 +22,35 @@ document.addEventListener('DOMContentLoaded', () => {
         title[0].innerText = image.title
         img[0].src = image.image
         comments = parent.getElementsByClassName('comments')
-        console.log(comments[0].querySelectorAll('li')[0].innerText)
-        let li = document.createElement('li')
-        image.comments.forEach((comment) => {
-            let i = 0 
-            let cmmt =comments[0].querySelectorAll('li')[i].innerText
-            cmmt = comment.content
-            console.log(cmmt)
-            console.log(comment.content)
-            i++
-        })
-        console.log(image.comments[0].content)
+        // console.log(comments[0].querySelectorAll('li')[0].innerText)
+        // let i = 0
+        // while (i < comments.length){ 
+        //     let newComment = image.comments[i].content
+        //     let cmmt = comments[0].querySelectorAll('li')[i].innerText
+        //     console.log(newComment, cmmt)
+        //     cmmt = newComment
+        //     i++
+        // }
     }
 
-    // card.addEventListener('click', event => {
-    //     if (event.target.className === 'like-button')
-    // })
+    card.addEventListener('click', event => {
+        if (event.target.className === 'like-button'){
+        span = event.target.previousElementSibling
+        likes = parseInt(span.innerText)
+        span.innerText = `${++likes} likes`
+        fetch(imageURL, {
+            method: "PATCH"
+        headers: {
+                "accept": "application/json"
+                "content-type": "application/json"
+            },
+            body: JSON.stringify({
+                likes
+            })
+        })
+        
+    }
+    })
 
 
 
