@@ -31,9 +31,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
     commentForm.addEventListener('submit', function(event) {
         event.preventDefault()
         // let comment = {}
-        let comment = {"comments": { commentForm.comment.value } }
+        // let comment = {"comments": { `${commentForm.comment.value}` } }
 
-        console.log(comment)
+        let newComment = document.createElement('li')
+        newComment.innerText = commentForm.comment.value
+        comments.appendChild(newComment)
+        // console.log(comment)
     })
 
 
