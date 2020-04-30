@@ -57,8 +57,8 @@ function increaseLike(event) {
        event.preventDefault()
    const  input =  document.getElementsByClassName('comment-input')[0]
 
-      console.log(input.innerHTML) 
-      comments = input.innerHTML.value
+     
+       input.textContent.value = comments
     
 
        
