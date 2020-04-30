@@ -22,24 +22,34 @@ document.addEventListener("DOMContentLoaded", function(){
             const img = document.getElementsByClassName("image")
             img.src = "${image.image}"
             const ul = document.getElementsByClassName("comments")
-            console.log(ul)
-           
+            
             ul.innertext = `
-                ${image.comments}.forEach(function(comment){
+            ${image.comments}.forEach(function(comment){
                 comment.content
-            `
-            document.addEventListener("click", function(event){
-                event.preventDefault()
-                if(event.target.className === "like-button"){
-
-                }
-                
-                if(event.target.className === "commment-button"){
+                `
+                document.addEventListener("click", function(event){
+                    event.preventDefault()
                     
+                    if(event.target.className === "like-button"){
+                        const form = event.target.parentNode
+                        const span = document.getElementsByClassName("span")
+                        const currentNum = span.innertext
+                        console.log(form)
+                        const newNum = currentNum = 1
+
+                       return  span.innertext = newNum
+                    
+                    }
+                })
+                
+                if(event.target.className === "comment-button"){
+                    form = event.target.parentNode
+                    const name = form.name.value 
+
 
                 }
                 
-            })
+        
         
         })
 
