@@ -17,7 +17,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     function renderImage(image){
         let img = document.getElementsByClassName('image')
+        let parent = img[0].parentNode
+        let title = parent.getElementsByClassName('title')
+        title[0].innerText = image.title
         img[0].src = image.image
+        comments = parent.getElementsByClassName('comments')
+        console.log(comments[0].querySelectorAll('li')[0].innerText)
+        let li = document.createElement('li')
+        image.comments.forEach((comment) => {
+            let i = 0 
+            let cmmt =comments[0].querySelectorAll('li')[i].innerText
+            cmmt = comment.content
+            console.log(cmmt)
+            console.log(comment.content)
+            i++
+        })
+        console.log(image.comments[0].content)
     }
 
     // card.addEventListener('click', event => {
