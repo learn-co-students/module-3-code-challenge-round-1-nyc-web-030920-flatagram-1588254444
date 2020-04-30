@@ -17,10 +17,32 @@
 
 // Add a comment (no persistence needed)
 //PATCH request to add a comment to a picture
+//adjust the form 
 
+const url = 'http://localhost:3000/image'
+const imageCtr = document.querySelector('.image-container')
 
 const getImages = () => {
-    fetch('http://localhost:3000/image')
+    fetch(url)
     .then(response => response.json())
     .then(console.log)
 }
+
+document.querySelector(".like-button")
+document.addEventListener('click', event => {
+    event.preventDefault()
+
+})
+
+
+
+// const renderImages = response.json() => {
+// imageCtr.forEach(response.json() => {
+
+
+
+// })
+
+
+}
+
